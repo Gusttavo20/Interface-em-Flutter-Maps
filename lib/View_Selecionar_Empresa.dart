@@ -14,16 +14,19 @@ class SelecionarEmpresa extends StatefulWidget {
 class SelecionarEmpresaState extends State<SelecionarEmpresa> {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark));
+        statusBarIconBrightness: Brightness.dark,
+      ),
+    );
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBarFilho(
-        height: 150,
+        height: size.height * 0.25,
       ),
       body: Container(
-          color: Colors.lightBlue[100],
+          color: Color(0XFFDFEAF5),
           child: ListView.builder(
             itemCount: 10,
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -47,10 +50,13 @@ class AppBarFilho extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Container(
-      height: 300,
+      height: height,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          SizedBox(
+            height: 35,
+          ),
           LabelSelecionarEmpresaAtivo(),
           SizedBox(
             height: 16,
@@ -72,8 +78,10 @@ class LabelSelecionarEmpresaAtivo extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Container(
+      width: size.width * 0.85,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             'Selecione a Empresa',
@@ -106,7 +114,7 @@ class CampoBuscar extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Container(
-      width: 330,
+      width: size.width * 0.85,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: Colors.grey[300],
@@ -140,30 +148,30 @@ class NomeEmpresaWidget extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        child: InkWell(
-          splashColor: Colors.blue.withAlpha(30),
-          child: SizedBox(
-            height: 60,
-            width: 330,
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  const Text(
+        child: SizedBox(
+          height: size.height * 0.08,
+          width: 350,
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(left: 24),
+                  child: Text(
                     '[Nome Empresa]',
                     style: TextStyle(
                       fontSize: 16,
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/SelecionarAtivo');
-                    },
-                    icon: const Icon(Icons.arrow_forward_ios),
-                  ),
-                ],
-              ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/SelecionarAtivo');
+                  },
+                  icon: const Icon(Icons.arrow_forward_ios),
+                ),
+              ],
             ),
           ),
         ),

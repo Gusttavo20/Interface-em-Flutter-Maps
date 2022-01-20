@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:projectway/selecionar_ativo.dart';
-
-import 'selecionar_empresa.dart';
+import 'package:projectway/View_EnviarDados.dart';
+import 'package:projectway/View_Selecionar_Ativo.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'View_Selecionar_Empresa.dart';
 
 class WidgetDoAplicativo extends StatelessWidget {
   const WidgetDoAplicativo({Key? key}) : super(key: key);
@@ -9,11 +10,19 @@ class WidgetDoAplicativo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: [
+        Locale('pt', 'BR'),
+      ],
       theme: ThemeData(primarySwatch: Colors.red),
-      initialRoute: '/SelecionarEmpresa',
+      initialRoute: '/EnviarDados',
       routes: {
         '/SelecionarEmpresa': (context) => SelecionarEmpresa(),
         '/SelecionarAtivo': (context) => SelecionarAtivo(),
+        '/EnviarDados': (context) => EnviarDados(),
       },
     );
   }

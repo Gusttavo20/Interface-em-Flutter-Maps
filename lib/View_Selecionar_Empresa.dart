@@ -15,7 +15,7 @@ class SelecionarEmpresaState extends State<SelecionarEmpresa> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
+      const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
       ),
@@ -26,34 +26,36 @@ class SelecionarEmpresaState extends State<SelecionarEmpresa> {
         height: size.height * 0.25,
       ),
       body: Container(
-          color: Color(0XFFDFEAF5),
-          child: ListView.builder(
-            itemCount: 10,
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: NomeEmpresaWidget(),
-              );
-            },
-          )),
+        color: const Color(0XFFDFEAF5),
+        child: ListView.builder(
+          itemCount: 10,
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          itemBuilder: (context, index) {
+            return const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: CampoNomeEmpresa(),
+            );
+          },
+        ),
+      ),
     );
   }
 }
 
 class AppBarFilho extends StatelessWidget implements PreferredSizeWidget {
   final double height;
-  AppBarFilho({
+  const AppBarFilho({
     Key? key,
     required this.height,
   }) : super(key: key);
+
+  @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
       height: height,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: const [
           SizedBox(
             height: 35,
           ),
@@ -61,7 +63,7 @@ class AppBarFilho extends StatelessWidget implements PreferredSizeWidget {
           SizedBox(
             height: 16,
           ),
-          const CampoBuscar(),
+          CampoBuscar(),
         ],
       ),
     );
@@ -77,32 +79,35 @@ class LabelSelecionarEmpresaAtivo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Container(
-      width: size.width * 0.85,
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Selecione a Empresa',
+    return Row(
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(left: 30),
+          child: Text(
+            'Selecione o Ativo',
+            textAlign: TextAlign.end,
             style: TextStyle(
-              color: Colors.grey[400],
+              color: Color(0xFFAAAFB9),
               fontSize: 20,
             ),
           ),
-          Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.001)
-              ..rotateY(-pi),
+        ),
+        Transform(
+          alignment: Alignment.bottomRight,
+          transform: Matrix4.identity()
+            ..setEntry(3, 2, 0.001)
+            ..rotateY(-pi),
+          child: Padding(
+            padding: const EdgeInsets.only(right: 50),
             child: IconButton(
+              alignment: Alignment.bottomRight,
               icon: const Icon(Icons.sort),
-              color: Colors.indigo[900],
+              color: const Color(0xFF004586),
               onPressed: () {},
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -123,11 +128,11 @@ class CampoBuscar extends StatelessWidget {
         padding: const EdgeInsets.only(left: 16),
         child: TextField(
           decoration: InputDecoration(
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
-              color: Colors.grey[400],
+              color: Color(0xFFAAAFB9),
             ),
-            hintText: "Procurar empresa",
+            hintText: 'Procurar empresa',
             border: InputBorder.none,
             hintStyle: TextStyle(color: Colors.grey[400]),
           ),
@@ -137,43 +142,38 @@ class CampoBuscar extends StatelessWidget {
   }
 }
 
-class NomeEmpresaWidget extends StatelessWidget {
-  const NomeEmpresaWidget({Key? key}) : super(key: key);
+class CampoNomeEmpresa extends StatelessWidget {
+  const CampoNomeEmpresa({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Center(
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: SizedBox(
-          height: size.height * 0.08,
-          width: 350,
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(left: 24),
-                  child: Text(
-                    '[Nome Empresa]',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: SizedBox(
+        height: size.height * 0.08,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(left: 24),
+              child: Text(
+                '[Nome Empresa]',
+                style: TextStyle(
+                  fontSize: 16,
                 ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/SelecionarAtivo');
-                  },
-                  icon: const Icon(Icons.arrow_forward_ios),
-                ),
-              ],
+              ),
             ),
-          ),
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed('/SelecionarAtivo');
+              },
+              icon: const Icon(Icons.arrow_forward_ios),
+            ),
+          ],
         ),
       ),
     );

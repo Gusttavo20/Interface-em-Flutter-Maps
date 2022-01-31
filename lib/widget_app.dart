@@ -8,25 +8,30 @@ import 'View_EnviarDados.dart';
 import 'View_Selecionar_Ativo.dart';
 import 'Calendario.dart';
 
+import 'maps.dart';
+
 class WidgetDoAplicativo extends StatelessWidget {
   const WidgetDoAplicativo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [
+      debugShowCheckedModeBanner: false,
+
+      supportedLocales: const [
         Locale('pt', 'BR'),
       ],
       theme: ThemeData(primarySwatch: Colors.red),
       initialRoute: '/SelecionarEmpresa',
       routes: {
-        '/SelecionarEmpresa': (context) => SelecionarEmpresa(),
-        '/SelecionarAtivo': (context) => SelecionarAtivo(),
-        '/EnviarDados': (context) => EnviarDados(),
+        '/SelecionarEmpresa': (context) => const SelecionarEmpresa(),
+        '/SelecionarAtivo': (context) => const SelecionarAtivo(),
+        '/EnviarDados': (context) => const EnviarDados(),
+        '/Maps': (context) => Maps(),
       },
       // Let `onUnknownRoute` handle this behavior.
     );

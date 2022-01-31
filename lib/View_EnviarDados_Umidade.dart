@@ -1,23 +1,18 @@
-import 'dart:math';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'View_EnviarDados_Temperatura.dart';
 import 'Calendario.dart';
-import 'View_EnviarDados_Coordenada.dart';
-import 'View_EnviarDados_Umidade.dart';
+import 'View_EnviarDados.dart';
 
-class EnviarDados extends StatefulWidget {
-  const EnviarDados({Key? key}) : super(key: key);
+class EnviardadosUmidade extends StatefulWidget {
+  const EnviardadosUmidade({Key? key}) : super(key: key);
 
   @override
-  State<EnviarDados> createState() {
-    return _EnviarDadosState();
-  }
+  _EnviardadosTemperaturaState createState() => _EnviardadosTemperaturaState();
 }
 
-class _EnviarDadosState extends State<EnviarDados> {
+class _EnviardadosTemperaturaState extends State<EnviardadosUmidade> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -27,94 +22,28 @@ class _EnviarDadosState extends State<EnviarDados> {
       ),
     );
     final Size size = MediaQuery.of(context).size;
-    return DefaultTabController(
-      initialIndex: 0,
-      length: 3,
-      child: Scaffold(
-        appBar: AppBarFilho(
-          height: size.height * 0.16,
-        ),
-        body: const TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          children: <Widget>[
-            EnviardadosTemperatura(),
-            EnviardadosUmidade(),
-            EnviarDadosCoordenadas(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class AppBarFilho extends StatelessWidget implements PreferredSizeWidget {
-  final double height;
-  const AppBarFilho({
-    Key? key,
-    required this.height,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    return AppBar(
-      leadingWidth: 0,
-      backgroundColor: Colors.white,
-      title: const Padding(
-        padding: EdgeInsets.only(top: 24, left: 10),
-        child: LabelNomeAtivo(),
-      ),
-      bottom: const TabBar(
-        indicator: UnderlineTabIndicator(
-          insets: EdgeInsets.only(left: 25, right: 25),
-          borderSide: BorderSide(
-            width: 8,
-            color: Color(0xFF004586),
-          ),
-        ),
-        indicatorWeight: 2,
-        indicatorColor: Color(0xFF004586),
-        labelColor: Color(0xFF004586),
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        tabs: [
-          Tab(text: 'Temperatura'),
-          Tab(text: 'Umidade'),
-          Tab(text: 'Coordenadas'),
-        ],
-      ),
-    );
-  }
-
-  @override
-  Size get preferredSize => Size.fromHeight(height);
-}
-
-class LabelNomeAtivo extends StatelessWidget {
-  const LabelNomeAtivo({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          color: const Color(0xFF004586),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        const Text(
-          '[Nome do Ativo]',
-          style: TextStyle(
-            color: Color(0xFF004586),
-            fontSize: 20,
+        Padding(
+          padding: const EdgeInsets.all(24),
+          child: CalendarioState(
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2021),
+            lastDate: DateTime(2022, 12),
+            onDateChanged: (DateTime value) {},
           ),
         ),
-        Transform(
-          alignment: Alignment.topLeft,
-          transform: Matrix4.identity()
-            ..setEntry(3, 2, 0.001)
-            ..rotateY(-pi),
+        const BotaoInformacoesTemperatura(),
+        const SizedBox(
+          height: 4,
         ),
+        const LabelEnviarOsSeguintesdados(),
+        const LabelNomeDosDados(),
+        const RegistroDosDados(),
+        const SizedBox(
+          height: 45,
+        ),
+        const ButtonEnviarDados(),
       ],
     );
   }
@@ -186,7 +115,7 @@ class BotaoInformacoesTemperatura extends StatelessWidget {
           ],
         ),
         const Text(
-          '+1.5 °C',
+          '+1.5 %RH',
           style: TextStyle(
             color: Color(0xFF004586),
             fontSize: 16,
@@ -248,69 +177,6 @@ class BotaoInformacoesTemperatura extends StatelessWidget {
   }
 }
 
-class LabelEnviarOsSeguintesdados extends StatelessWidget {
-  const LabelEnviarOsSeguintesdados({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    return Row(
-      children: const [
-        Padding(
-          padding: EdgeInsets.only(left: 24, top: 14),
-          child: Text(
-            'Enviando os seguintes dados',
-            style: TextStyle(
-              color: Color(0xFF004586),
-              fontSize: 20,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class LabelNomeDosDados extends StatelessWidget {
-  const LabelNomeDosDados({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    return Padding(
-      padding: const EdgeInsets.only(left: 24, right: 24, top: 16),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(
-              'Sensor',
-              style: TextStyle(
-                fontSize: 14,
-                color: Color(0xFF1D1F23),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 30),
-              child: Text(
-                'Data',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF1D1F23),
-                ),
-              ),
-            ),
-            Text(
-              'Temperatura',
-              style: TextStyle(
-                fontSize: 14,
-                color: Color(0xFF1D1F23),
-              ),
-            ),
-          ]),
-    );
-  }
-}
-
 class RegistroDosDados extends StatelessWidget {
   const RegistroDosDados({Key? key}) : super(key: key);
 
@@ -340,46 +206,13 @@ class RegistroDosDados extends StatelessWidget {
               ),
             ),
             Text(
-              '+1.5 °C',
+              '+1.5 %RH',
               style: TextStyle(
                 fontSize: 16,
                 color: Color(0xFF1D1F23),
               ),
             ),
           ]),
-    );
-  }
-}
-
-class ButtonEnviarDados extends StatelessWidget {
-  const ButtonEnviarDados({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    return Container(
-      height: size.height * 0.060,
-      width: size.width * 0.500,
-      alignment: Alignment.bottomCenter,
-      decoration: BoxDecoration(
-        color: const Color(0xFF004586),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: TextButton(
-        onPressed: () {},
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
-              'Enviar Dados',
-              style: TextStyle(
-                fontSize: 16,
-                color: Color(0xFFFFFFFF),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

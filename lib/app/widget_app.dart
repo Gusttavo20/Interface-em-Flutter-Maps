@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:projectway/View_EnviarDados.dart';
-import 'package:projectway/View_Selecionar_Ativo.dart';
-import 'package:projectway/View_Selecionar_Empresa.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'View_Selecionar_Empresa.dart';
-import 'View_EnviarDados.dart';
-import 'View_Selecionar_Ativo.dart';
-import 'Calendario.dart';
-
-import 'maps.dart';
+import 'modules/enviar_dados/presentation/pages/enviar_dados_page.dart';
+import 'modules/maps/maps.dart';
+import 'modules/selecionar_ativo/presentation/pages/selecionar_ativo_page.dart';
+import 'modules/selecionar_empresa/presentation/pages/selecionar_empresa_page.dart';
 
 class WidgetDoAplicativo extends StatelessWidget {
   const WidgetDoAplicativo({Key? key}) : super(key: key);

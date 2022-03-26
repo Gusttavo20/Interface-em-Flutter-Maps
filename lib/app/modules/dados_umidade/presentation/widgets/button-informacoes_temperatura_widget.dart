@@ -1,53 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-import 'Calendario.dart';
-import 'View_EnviarDados.dart';
-
-class EnviardadosTemperatura extends StatefulWidget {
-  const EnviardadosTemperatura({Key? key}) : super(key: key);
-
-  @override
-  _EnviardadosTemperaturaState createState() => _EnviardadosTemperaturaState();
-}
-
-class _EnviardadosTemperaturaState extends State<EnviardadosTemperatura> {
-  @override
-  Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-      ),
-    );
-    final Size size = MediaQuery.of(context).size;
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(24),
-          child: CalendarioState(
-            initialDate: DateTime.now(),
-            firstDate: DateTime(2021),
-            lastDate: DateTime(2022, 12),
-            onDateChanged: (DateTime value) {},
-          ),
-        ),
-        const BotaoInformacoesTemperatura(),
-        const SizedBox(
-          height: 4,
-        ),
-        const LabelEnviarOsSeguintesdados(),
-        const LabelNomeDosDados(),
-        const RegistroDosDados(),
-        const SizedBox(
-          height: 45,
-        ),
-        const ButtonEnviarDados(),
-      ],
-    );
-  }
-}
 
 class BotaoInformacoesTemperatura extends StatelessWidget {
   const BotaoInformacoesTemperatura({Key? key}) : super(key: key);
@@ -115,7 +66,7 @@ class BotaoInformacoesTemperatura extends StatelessWidget {
           ],
         ),
         const Text(
-          '+1.5 °C',
+          '+1.5 %RH',
           style: TextStyle(
             color: Color(0xFF004586),
             fontSize: 16,
@@ -173,46 +124,6 @@ class BotaoInformacoesTemperatura extends StatelessWidget {
           ],
         ),
       ]),
-    );
-  }
-}
-
-class RegistroDosDados extends StatelessWidget {
-  const RegistroDosDados({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    return Padding(
-      padding: const EdgeInsets.only(left: 24, right: 24),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(
-              '7',
-              style: TextStyle(
-                fontSize: 16,
-                color: Color(0xFF1D1F23),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 40),
-              child: Text(
-                '25/01/2022',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFF1D1F23),
-                ),
-              ),
-            ),
-            Text(
-              '+1.5 °C',
-              style: TextStyle(
-                fontSize: 16,
-                color: Color(0xFF1D1F23),
-              ),
-            ),
-          ]),
     );
   }
 }
